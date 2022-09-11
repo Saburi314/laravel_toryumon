@@ -2,6 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HelloController;
+use App\Http\Controllers\AuthController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -16,6 +18,13 @@ use App\Http\Controllers\HelloController;
 
 Route::get('/', function () {
     return view('welcome');
-})->name('welcome');
+})->name('welcome')->middleware('auth');
 
 Route::get('/hello', [HelloController::class, 'index'])->name('hello');
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+//認証系
+Route::get('auth', [AuthController::class, 'getAuth']);
+Route::post('auth', [AuthController::class, 'postAuth']);

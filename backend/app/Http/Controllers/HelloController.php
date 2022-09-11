@@ -3,24 +3,24 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-// use Faker\Provider\ar_JO\Person;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
+use App\Models\Person as Person;
 
 // use Illuminate\Http\Request;
 // use Illuminate\Support\Facades\DB;
-use App\Models\Person as Person;
 
 
 class HelloController extends Controller
 {
     public function index(Request $request)
     {
-        // $items = DB::table('people')->get();
+        $user = Auth::user();
         $items = Person::all();
 
-        return view('hello', ['items' => $items]);
+        $param = [
+          'items' => $items, 'user' => $user
+        ];
 
-        // return view('hello');
+        return view('hello', $param);
     }
 }
